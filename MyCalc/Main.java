@@ -5,12 +5,8 @@ public class Main {
         
         String input = "3/5+4/2";
 
-        RationalCalc rationalCalc = new RationalCalc(null, null);
-        rationalCalc.splitString(input);
-        System.out.println(rationalCalc.calcRational(rationalCalc));
+        Presenter p = new Presenter(new RationalCalc(), new View());
+        p.startProgram(input);
         
-
-        System.out.println(rationalCalc.getNums());
-        System.out.println(rationalCalc.getActs());
     }
 }

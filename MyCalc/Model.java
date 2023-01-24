@@ -3,6 +3,7 @@ package MyCalc;
 import java.util.List;
 
 public interface Model {
+   
    RationalCalc splitString(String input);
 
    List<Integer> getNums();

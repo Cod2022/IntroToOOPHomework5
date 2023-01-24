@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class RationalCalc extends CalcModel{
+
+    public RationalCalc() {
+        
+    }
     
     public RationalCalc(List<String> acts, List<Integer> nums) {
         this.acts = acts;
