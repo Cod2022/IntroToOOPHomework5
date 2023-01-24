@@ -16,6 +16,10 @@ public class Presenter {
     public void startProgram(String input) {
         RationalCalc rationalCalc = new RationalCalc(null, null);
         rationalCalc.splitString(input);
-        view.printResult(rationalCalc.calcRational(rationalCalc));
+        String result = rationalCalc.calcRational(rationalCalc);
+        view.printResult(result);
+
+        Log log = new Log();
+        log.writeLog(result);
     }
 }
