@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.*;
 
 public class Try {
     public static void main(String[] args) {
-        String n = "3/4 + 2/5";
+        String n = "35/4 + 2/5";
         StringBuilder a = new StringBuilder();
         StringBuilder b = new StringBuilder();
         StringBuilder result = new StringBuilder();
@@ -12,33 +13,22 @@ public class Try {
 
         StringTokenizer s = new StringTokenizer(n);
 
-        List<String> t = new ArrayList<>();
-        List<String> d = new ArrayList<>();
-
+        
         for (int i = 0; i < n.length(); i++) {
             Character c = n.charAt(i);
             if (c.equals('+')) { // разбить на два метода
                 while (s.hasMoreTokens()) {
-                    t.add(s.nextToken());
-                    // a.append(s.nextToken());
+                    a.append(s.nextToken());
                     if (s.nextToken().equals("+")) {
-                        // s.nextToken("+");
-                        // s.nextToken(" ");
-                        d.add(s.nextToken());
-                        // b.append(s.nextToken());
+                        b.append(s.nextToken());
                     }
                 }
             }
         }
 
-        // System.out.println(a);
-        // System.out.println(b);
-    
-        System.out.println(t);
-        System.out.println(d);
+        System.out.println(a);
+        System.out.println(b);
 
-
-        
         // Integer result2 = 0;
 
         // for (int i = 0; i < a.length(); i++) {

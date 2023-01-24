@@ -1,114 +1,87 @@
 package MyCalc;
 
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class RationalCalc extends CalcModel{
     
-    @Override
-    public String rationalNumSum(String stringInput) {
-        this.a = new StringBuilder();
-        this.b = new StringBuilder();
-        this.result = new StringBuilder();
-        this.s = new StringTokenizer(stringInput);
-        
-        while (s.hasMoreTokens()) {
-            a.append(s.nextToken());
-            if (s.nextToken().equals("+")) {
-                b.append(s.nextToken());
-            }
-        }
-        int sum = 0;
-        for (int i = 0; i < a.length(); i++) {
-            Character c = a.charAt(i);
-            if (Character.isDigit(c)){
-                sum = Character.getNumericValue(a.charAt(i)) + Character.getNumericValue(b.charAt(i));
-                result.append(sum);
-            }
-            if (c.equals('/')) {
-                result.append(c);
-            }
-        }
-        return result.toString();
+    public RationalCalc(List<String> acts, List<Integer> nums) {
+        this.acts = acts;
+        this.nums = nums;
     }
 
     @Override
-    public String rationalNumSubtract(String stringInput) {
-        this.a = new StringBuilder();
-        this.b = new StringBuilder();
-        this.result = new StringBuilder();
-        this.s = new StringTokenizer(stringInput);
-        
-        while (s.hasMoreTokens()) {
-            a.append(s.nextToken());
-            if (s.nextToken().equals("-")) {
-                b.append(s.nextToken());
-            }
+    public RationalCalc splitString(String input) {
+        this.pNum = Pattern.compile("\\d+");
+        this.pAct = Pattern.compile("[+\\-*:]");
+        this.nums = new ArrayList<>();
+        this.acts = new ArrayList<>();
+        this.mNum = pNum.matcher(input);
+        this.mAct = pAct.matcher(input);
+
+        while (mNum.find()) {
+            nums.add(Integer.parseInt(mNum.group()));
         }
-        int sum = 0;
-        for (int i = 0; i < a.length(); i++) {
-            Character c = a.charAt(i);
-            if (Character.isDigit(c)){
-                sum = Character.getNumericValue(a.charAt(i)) - Character.getNumericValue(b.charAt(i));
-                result.append(sum);
-            }
-            if (c.equals('/')) {
-                result.append(c);
-            }
+
+        while (mAct.find()) {
+            acts.add(mAct.group());
         }
-        return result.toString();
+
+        return new RationalCalc(acts, nums);
     }
 
     @Override
-    public String rationalNumMult(String stringInput) {
-        this.a = new StringBuilder();
-        this.b = new StringBuilder();
-        this.result = new StringBuilder();
-        this.s = new StringTokenizer(stringInput);
-        
-        while (s.hasMoreTokens()) {
-            a.append(s.nextToken());
-            if (s.nextToken().equals("*")) {
-                b.append(s.nextToken());
-            }
-        }
-        int sum = 0;
-        for (int i = 0; i < a.length(); i++) {
-            Character c = a.charAt(i);
-            if (Character.isDigit(c)){
-                sum = Character.getNumericValue(a.charAt(i)) * Character.getNumericValue(b.charAt(i));
-                result.append(sum);
-            }
-            if (c.equals('/')) {
-                result.append(c);
-            }
-        }
-        return result.toString();
+    public List<Integer> getNums() {
+        return this.nums;
     }
 
     @Override
-    public String rationalNumDivide(String stringInput) {
-        this.a = new StringBuilder();
-        this.b = new StringBuilder();
-        this.result = new StringBuilder();
-        this.s = new StringTokenizer(stringInput);
-        
-        while (s.hasMoreTokens()) {
-            a.append(s.nextToken());
-            if (s.nextToken().equals(":")) {
-                b.append(s.nextToken());
-            }
-        }
-        float sum = 0;
-        for (int i = 0; i < a.length(); i++) {
-            Character c = a.charAt(i);
-            if (Character.isDigit(c)){
-                sum = Character.getNumericValue(a.charAt(i)) / Character.getNumericValue(b.charAt(i));
-                result.append(sum);
-            }
-            if (c.equals('/')) {
-                result.append(c);
-            }
-        }
-        return result.toString();
+    public List<String> getActs() {
+        return this.acts;
     }
+
+
+    @Override
+    public String toString() {
+        return String.format("acts: nums:", this.acts, this.nums);
+    }
+
+    @Override
+    public String calcRational(RationalCalc rationalCalc) {
+        StringBuilder resString = new StringBuilder();
+        double sumNum = 0;
+        double sumDenom = 0;
+        for (String item : rationalCalc.getActs()) {
+            if (item.equals("+")) {
+                for (int i = 0; i < rationalCalc.getNums().size(); i+=2) {
+                    sumNum = sumNum + rationalCalc.getNums().get(i);
+                }
+                resString.append(sumNum);
+                for (int i = 1; i < rationalCalc.getNums().size(); i+=2) {
+                    sumDenom = sumDenom + rationalCalc.getNums().get(i);
+                }
+                resString.append("/");
+                resString.append(sumDenom);
+            }
+            if (item.equals("-")) {
+                double sumNumMin = rationalCalc.getNums().get(0);
+                for (int i = 2; i < rationalCalc.getNums().size(); i+=2) {
+                    sumNumMin = sumNumMin - rationalCalc.getNums().get(i); 
+                }
+                resString.append(sumNumMin);
+                double sumDenomMin = rationalCalc.getNums().get(1);
+                for (int i = 3; i < rationalCalc.getNums().size(); i+=2) {
+                    sumDenomMin = sumDenomMin - rationalCalc.getNums().get(i);
+                }
+                resString.append("/");
+                resString.append(sumDenomMin);
+            }
+
+        }
+
+        return resString.toString();
+    }
+    
 }
+

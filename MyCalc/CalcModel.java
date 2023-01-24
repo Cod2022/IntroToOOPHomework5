@@ -1,11 +1,16 @@
 package MyCalc;
 
-import java.util.StringTokenizer;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class CalcModel implements Model{
     String stringInput;
-    StringBuilder a;
-    StringBuilder b;
-    StringBuilder result;
-    StringTokenizer s;
+    Pattern pNum;
+    Pattern pAct;
+    Matcher mNum;
+    Matcher mAct;
+    List<Integer> nums;
+    List<String> acts;
+    
 }

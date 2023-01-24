@@ -1,8 +1,13 @@
 package MyCalc;
 
+import java.util.List;
+
 public interface Model {
-    String rationalNumSum(String stringInput);
-    String rationalNumSubtract(String stringInput);
-    String rationalNumMult(String stringInput);
-    String rationalNumDivide(String stringInput);
+   RationalCalc splitString(String input);
+
+   List<Integer> getNums();
+
+   List<String> getActs();
+
+   String calcRational(RationalCalc rationalCalc);
 }
